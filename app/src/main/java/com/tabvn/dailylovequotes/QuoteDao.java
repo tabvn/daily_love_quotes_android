@@ -22,10 +22,10 @@ public interface QuoteDao {
     @Query("DELETE FROM quote")
     void deleteAll();
 
-    @Query("SELECT * FROM quote where category = :category")
+    @Query("SELECT * FROM quote where category = :category ORDER BY created DESC")
     LiveData<List<Quote>> getAllByCategory(String category);
 
-    @Query("SELECT * FROM quote where category = :color")
+    @Query("SELECT * FROM quote where category = :color ORDER BY created DESC")
     LiveData<List<Quote>> getAllByColor(String color);
 
 }

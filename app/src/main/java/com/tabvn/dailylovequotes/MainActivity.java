@@ -11,6 +11,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    Fragment selectedFragment = null;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -19,37 +21,36 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
 
-            Fragment selectedFragment = null;
-
-
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 
                     setTitle(R.string.app_name);
-                    selectedFragment = new GridFragment();
 
+                    selectedFragment = new GridFragment();
                     ((GridFragment) selectedFragment).filter = new Filter("category", "new");
 
                     break;
 
+
                 case R.id.navigation_favorites:
 
-                    setTitle(R.string.my_favorites);
                     selectedFragment = new GridFragment();
+                    ((GridFragment) selectedFragment).filter = new Filter("category", "new");
 
                     break;
 
                 case R.id.navigation_more:
 
-                    setTitle(R.string.more);
+
                     selectedFragment = new GridFragment();
+                    ((GridFragment) selectedFragment).filter = new Filter("category", "new");
 
                     break;
             }
 
 
-
             getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameContainer, selectedFragment).commit();
+
             return true;
         }
     };
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        selectedFragment = new GridFragment();
+        ((GridFragment) selectedFragment).filter = new Filter("category", "new");
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameContainer, selectedFragment).commit();
 
     }
 

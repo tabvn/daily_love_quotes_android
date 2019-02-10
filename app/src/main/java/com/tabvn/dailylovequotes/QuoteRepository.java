@@ -27,7 +27,6 @@ public class QuoteRepository {
         new DeleteAllQuoteAsyncTask(quoteDao).execute();
     }
 
-
     public LiveData<List<Quote>> getQuotesByCategory(String category) {
         return quoteDao.getAllByCategory(category);
     }
