@@ -11,7 +11,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    Fragment selectedFragment = null;
+    GridFragment gridFragment;
+    GridFragment favoriteFragment;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -24,32 +25,38 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 
-                    setTitle(R.string.app_name);
 
-                    selectedFragment = new GridFragment();
-                    ((GridFragment) selectedFragment).filter = new Filter("category", "new");
+                    if (gridFragment == null) {
+                        gridFragment = new GridFragment();
+                    }
+                    gridFragment.filter = new Filter("category", "new");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameContainer, gridFragment).commit();
+
 
                     break;
 
 
                 case R.id.navigation_favorites:
 
-                    selectedFragment = new GridFragment();
-                    ((GridFragment) selectedFragment).filter = new Filter("category", "new");
+                    if (favoriteFragment == null) {
+                        favoriteFragment = new GridFragment();
+                    }
+                    favoriteFragment.filter = new Filter("category", "favorites");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameContainer, favoriteFragment).commit();
 
                     break;
 
                 case R.id.navigation_more:
 
-
-                    selectedFragment = new GridFragment();
-                    ((GridFragment) selectedFragment).filter = new Filter("category", "new");
+                    if (favoriteFragment == null) {
+                        favoriteFragment = new GridFragment();
+                    }
+                    favoriteFragment.filter = new Filter("category", "favorites");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameContainer, favoriteFragment).commit();
 
                     break;
             }
 
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameContainer, selectedFragment).commit();
 
             return true;
         }
@@ -62,9 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        selectedFragment = new GridFragment();
-        ((GridFragment) selectedFragment).filter = new Filter("category", "new");
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameContainer, selectedFragment).commit();
+
+
+        gridFragment = new GridFragment();
+        gridFragment.filter = new Filter("category", "new");
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrameContainer, gridFragment).commit();
 
     }
 
